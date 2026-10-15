@@ -3,7 +3,7 @@
 A React Native (Expo) app with a Node.js + Express + MongoDB backend. It implements two screens from the DocConnect design:
 
 - **Home**: the logged-in user's profile at the top, then a scrollable feed of posts, with loading and error states.
-- **Discover**: a list of people, each with a **Connect** button. A sent request shows as **Requested**, and stays that way after the app is closed and reopened, because the state is stored in MongoDB.
+- **Discover**: a 2-column grid of people with search, each with a **Connect** button. A sent request shows as **Requested**, and stays that way after the app is closed and reopened, because the state is stored in MongoDB.
 
 There is no login. The **first seeded user** is treated as the logged-in user, and their ID is hardcoded in the app.
 
@@ -111,13 +111,17 @@ Images are stored in the database as paths, such as `/images/profile/profile-1.p
 
 ## Design
 
-The colours and type scale come from the developer handoff and live in `mobile/src/constants/theme.ts` as `Palette` and `Typography`. The app uses the DM Sans font through `@expo-google-fonts/dm-sans`, loaded in `src/app/_layout.tsx`. Icons are the supplied SVGs in `mobile/assets/icons`.
+The colours and type scale come from the developer handoff and live in `mobile/src/constants/theme.ts` as `Palette` and `Typography`. The app uses the DM Sans font through `@expo-google-fonts/dm-sans`, loaded in `src/app/_layout.tsx`. The supplied SVG icons are in `mobile/assets/icons`; the Connect button uses `icon-add-user.svg`.
 
 ## Troubleshooting
 
 | Problem | Fix |
 |---|---|
-| App shows "Unable to load posts" | Check that the backend is running and `API_URL` uses your computer's current IP address. Open `http://<ip>:3000/posts` in the phone's browser to test. |
+| App shows "Unable to load home feed" or "Unable to load people" | Check that the backend is running and `API_URL` uses your computer's current IP address. Open `http://<ip>:3000/posts` in the phone's browser to test. |
 | Connect does nothing, or the API returns 400 or 404 | `CURRENT_USER_ID` is out of date. Re-run the seed and copy the new ID. |
 | "Could not connect to any servers in your MongoDB Atlas cluster" | Add your current IP under Atlas **Network Access**. |
 | Expo Go says the project is incompatible | Update Expo Go to the version that supports SDK 57. |
+
+## AI assistance
+
+An AI assistant (Claude) was used for backend setup, debugging, environment setup, and this README. The Home and Discover screens were written by me.
