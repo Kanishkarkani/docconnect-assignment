@@ -18,9 +18,7 @@ router.get("/", async (req, res) => {
       });
     }
 
-    const users = await User.find({
-      _id: { $ne: currentUserId }
-    })
+    const users = await User.find()
       .select("name occupation profileImage")
       .lean();
 
