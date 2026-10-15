@@ -1,17 +1,18 @@
 import { NativeTabs } from 'expo-router/unstable-native-tabs';
-import { useColorScheme } from 'react-native';
 
-import { Colors } from '@/constants/theme';
+import { Palette } from '@/constants/theme';
 
+// The design is light-only, so the tab bar always uses the light palette.
 export default function AppTabs() {
-  const scheme = useColorScheme();
-  const colors = Colors[scheme === 'unspecified' ? 'light' : scheme];
-
   return (
     <NativeTabs
-      backgroundColor={colors.background}
-      indicatorColor={colors.backgroundElement}
-      labelStyle={{ selected: { color: colors.text } }}>
+      backgroundColor={Palette.white}
+      indicatorColor={Palette.primaryLight}
+      tintColor={Palette.primary}
+      labelStyle={{
+        default: { color: Palette.textSecondary },
+        selected: { color: Palette.primary },
+      }}>
       <NativeTabs.Trigger name="index">
         <NativeTabs.Trigger.Label>Home</NativeTabs.Trigger.Label>
         <NativeTabs.Trigger.Icon
