@@ -74,19 +74,40 @@ export default function HomeScreen() {
 
   const renderPost = ({ item }: { item: Post }) => (
     <View style={styles.postCard}>
-      <View style={styles.postHeaderRow}>
-        <Image source={{ uri: item.author.profileImage }} style={styles.postAvatar} />
-        <View style={styles.postHeaderText}>
-          <Text style={styles.postAuthor}>{item.author.name}</Text>
-          <Text style={styles.postRole}>{item.author.occupation}</Text>
+      <View style={styles.postHeaderContent}>
+        <View style={styles.postHeaderRow}>
+          <Image source={{ uri: item.author.profileImage }} style={styles.postAvatar} />
+          <View style={styles.postHeaderText}>
+            <Text style={styles.postAuthor}>{item.author.name}</Text>
+            <Text style={styles.postRole}>{item.author.occupation}</Text>
+          </View>
         </View>
+        <Text style={styles.postContent}>{item.content}</Text>
       </View>
 
       {item.image ? (
         <Image source={{ uri: item.image }} style={styles.postImage} contentFit="cover" />
       ) : null}
 
-      <Text style={styles.postContent}>{item.content}</Text>
+      <View style={styles.postFooter}>
+        <View style={styles.engagementItem}>
+          <Image
+            source={require('@/assets/icons/icon-heart.svg')}
+            style={styles.engagementIcon}
+            tintColor={Palette.textSecondary}
+          />
+          <Text style={styles.engagementCount}>24</Text>
+        </View>
+        <View style={styles.engagementItem}>
+          <Image
+            source={require('@/assets/icons/icon-send-outline.svg')}
+            style={styles.engagementIcon}
+            tintColor={Palette.textSecondary}
+          />
+          <Text style={styles.engagementCount}>8</Text>
+        </View>
+      </View>
+
       <Text style={styles.postDate}>{new Date(item.timestamp).toLocaleDateString()}</Text>
     </View>
   );
@@ -94,11 +115,22 @@ export default function HomeScreen() {
   const listHeader = (
     <View style={styles.listHeader}>
       <View style={styles.brandBar}>
-        <Text style={[styles.brandText, Typography.h2]}>DocConnect</Text>
+        <Text style={[styles.brandText, Typography.h2]}>
+          Doc<Text style={styles.brandAccent}>Connect</Text>
+        </Text>
+        <View style={styles.createButton}>
+          <Image
+            source={require('@/assets/icons/icon-plus.svg')}
+            style={styles.createIcon}
+            tintColor={Palette.white}
+          />
+        </View>
       </View>
 
       <View style={styles.profileCard}>
-        <Image source={{ uri: currentUser?.profileImage }} style={styles.avatar} />
+        <View style={styles.avatarFrame}>
+          <Image source={{ uri: currentUser?.profileImage }} style={styles.avatar} />
+        </View>
 
         <View style={styles.profileMeta}>
           <View style={styles.countPill}>
@@ -186,23 +218,47 @@ const styles = StyleSheet.create({
     paddingVertical: 14,
     borderBottomWidth: 1,
     borderBottomColor: Palette.border,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
   brandText: {
-    color: Palette.primaryDark,
+    color: Palette.textPrimary,
+  },
+  brandAccent: {
+    color: Palette.primary,
+  },
+  createButton: {
+    width: 40,
+    height: 40,
+    borderRadius: 8,
+    backgroundColor: Palette.primary,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  createIcon: {
+    width: 20,
+    height: 20,
   },
   profileCard: {
-    backgroundColor: Palette.white,
+    backgroundColor: Palette.backgroundLight,
     paddingHorizontal: 20,
     paddingTop: 24,
     paddingBottom: 20,
     alignItems: 'center',
-    borderBottomWidth: 1,
-    borderBottomColor: Palette.border,
+  },
+  avatarFrame: {
+    width: 120,
+    height: 120,
+    borderRadius: 60,
+    backgroundColor: Palette.white,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   avatar: {
-    width: 88,
-    height: 88,
-    borderRadius: 44,
+    width: 80,
+    height: 80,
+    borderRadius: 40,
     backgroundColor: Palette.border,
   },
   profileMeta: {
@@ -212,6 +268,8 @@ const styles = StyleSheet.create({
   countPill: {
     backgroundColor: Palette.primaryLight,
     borderRadius: 999,
+    borderWidth: 1,
+    borderColor: Palette.primary,
     paddingHorizontal: 12,
     paddingVertical: 6,
     marginBottom: 8,
@@ -231,20 +289,14 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   list: {
-    paddingHorizontal: 16,
-    paddingTop: 16,
     paddingBottom: 24,
-    gap: 16,
+    gap: 8,
   },
   postCard: {
     backgroundColor: Palette.white,
-    borderRadius: 16,
+  },
+  postHeaderContent: {
     padding: 16,
-    shadowColor: '#000',
-    shadowOpacity: 0.04,
-    shadowRadius: 12,
-    shadowOffset: { width: 0, height: 6 },
-    elevation: 1,
   },
   postHeaderRow: {
     flexDirection: 'row',
@@ -273,9 +325,7 @@ const styles = StyleSheet.create({
   },
   postImage: {
     width: '100%',
-    height: 220,
-    borderRadius: 12,
-    marginTop: 14,
+    aspectRatio: 1,
     backgroundColor: Palette.border,
   },
   postContent: {
@@ -285,10 +335,30 @@ const styles = StyleSheet.create({
     lineHeight: 22,
     marginTop: 14,
   },
+  postFooter: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    padding: 16,
+  },
+  engagementItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+  },
+  engagementIcon: {
+    width: 20,
+    height: 20,
+  },
+  engagementCount: {
+    color: Palette.textSecondary,
+    fontFamily: 'DMSans_400Regular',
+    fontSize: 14,
+  },
   postDate: {
     color: Palette.textSecondary,
     fontFamily: 'DMSans_400Regular',
     fontSize: 12,
-    marginTop: 12,
+    paddingHorizontal: 16,
+    paddingBottom: 16,
   },
 });
